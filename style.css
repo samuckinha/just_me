@@ -1,1 +1,119 @@
+/* Estilos Gerais */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f0f0f0; /* Fundo claro */
+    color: #333;
+}
 
+/* 1. Cabeçalho e Imagem de Perfil */
+.profile-header {
+    width: 100%;
+    /* Define uma altura mínima para dar espaço ao perfil/capa */
+    min-height: 250px; 
+    overflow: hidden; /* Garante que a imagem não saia do container */
+    background-color: #ccc; /* Cor de fundo caso a imagem demore a carregar */
+}
+
+.profile-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Faz a imagem cobrir todo o container, cortando se necessário */
+    display: block;
+}
+
+/* 2. Navegação Principal */
+.main-nav {
+    background-color: #fff; /* Fundo branco ou claro para a barra de navegação */
+    border-bottom: 2px solid #ddd; /* Linha sutil abaixo */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra suave */
+}
+
+.main-nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex; /* Alinha os itens lado a lado */
+    justify-content: center; /* Centraliza os links */
+}
+
+.main-nav li a {
+    display: block;
+    padding: 15px 25px;
+    text-decoration: none;
+    color: #555; /* Cor normal do texto */
+    font-weight: bold;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.main-nav li a:hover {
+    background-color: #eee;
+    color: #000;
+}
+
+/* Estilo para o link ativo (destacado) */
+.main-nav li a.active {
+    color: #000; /* Cor escura para o ativo */
+    border-bottom: 3px solid #e53935; /* Linha vermelha/destacada por baixo, como nas imagens */
+    /* Você pode ajustar a cor #e53935 (vermelho) para outra de sua preferência */
+}
+
+/* 3. Área de Conteúdo (Galeria) */
+.content-area {
+    padding: 20px;
+    max-width: 1200px; /* Limita a largura do conteúdo central */
+    margin: 0 auto;
+}
+
+.photo-gallery {
+    display: grid;
+    /* Cria 3 colunas de tamanho igual (1fr) */
+    grid-template-columns: repeat(3, 1fr); 
+    gap: 15px; /* Espaço entre as imagens */
+}
+
+.photo-gallery img {
+    width: 100%;
+    height: 300px; /* Altura fixa para as imagens da galeria */
+    object-fit: cover; /* Garante que a imagem preencha o espaço sem distorcer */
+    display: block;
+    border-radius: 4px; /* Cantos levemente arredondados */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra para destacar */
+    cursor: pointer; /* Indica que são clicáveis */
+    transition: transform 0.2s;
+}
+
+.photo-gallery img:hover {
+    transform: scale(1.03); /* Efeito de zoom sutil ao passar o mouse */
+}
+
+/* 4. Rodapé */
+.page-footer {
+    text-align: center;
+    padding: 15px;
+    background-color: #333;
+    color: #fff;
+    margin-top: 40px;
+}
+
+/* Responsividade: Mudança para 2 colunas em telas menores */
+@media (max-width: 768px) {
+    .photo-gallery {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* Responsividade: Mudança para 1 coluna em telas muito pequenas */
+@media (max-width: 480px) {
+    .photo-gallery {
+        grid-template-columns: 1fr;
+    }
+    .main-nav ul {
+        flex-wrap: wrap; /* Permite que os links quebrem a linha */
+    }
+    .main-nav li a {
+        padding: 10px 15px;
+        font-size: 0.9em;
+    }
+}
