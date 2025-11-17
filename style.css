@@ -117,3 +117,74 @@ body {
         font-size: 0.9em;
     }
 }
+/* ... (Seus estilos gerais anteriores) ... */
+
+/* 2. Navegação Principal - Adicionando ícones e melhorando o destaque */
+.main-nav li a {
+    /* ... (Seus estilos anteriores) ... */
+    display: flex; /* Permite alinhar texto e potencial ícone */
+    align-items: center;
+    gap: 8px; /* Espaço entre texto e potencial ícone */
+}
+
+/* Estilo para o link ativo (destacado) */
+.main-nav li a.active {
+    color: #2a6f8f; /* Nova cor: Azul elegante para destaque */
+    border-bottom: 3px solid #2a6f8f; 
+}
+.main-nav li a.active:hover {
+    background-color: transparent; /* Evita mudança de cor de fundo no ativo */
+}
+
+/* 3. Área de Conteúdo (Galeria e Seções de Informação) */
+.content-area {
+    padding: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+    /* Adiciona transição para o conteúdo */
+    transition: opacity 0.4s ease-in-out; 
+}
+
+/* Novo Estilo: Seções de Informação (TEATRO, AMIGOS, SOBRE MIM) */
+.info-section {
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    line-height: 1.6;
+    animation: fadeIn 0.8s ease-out; /* Animação de entrada */
+}
+
+.info-section h2 {
+    color: #2a6f8f; /* Cor do título */
+    border-bottom: 2px solid #eee;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+}
+
+.info-section ul {
+    list-style: none;
+    padding-left: 0;
+}
+
+.info-section ul li {
+    background-color: #f9f9f9;
+    margin: 8px 0;
+    padding: 10px;
+    border-left: 4px solid #4caf50; /* Cor de destaque verde */
+    border-radius: 4px;
+}
+
+/* Animação para o fadeIn do Conteúdo (CSS Keyframe) */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ... (Seus estilos de galeria e rodapé) ... */ 
