@@ -1,12 +1,11 @@
 document.addEventListener('DOMContentLoaded', function() {
     const navLinks = document.querySelectorAll('.main-nav li a');
     const contentArea = document.querySelector('.content-area');
-    // Salva o HTML da galeria inicial antes de qualquer modificação
     const initialGalleryHTML = document.querySelector('.gallery-section').outerHTML;
 
     // Conteúdo dinâmico para cada aba
     const pageContent = {
-        'GALERIA': {
+        'Home': {
             title: 'Minhas Fotos Recentes',
             html: initialGalleryHTML
         },
