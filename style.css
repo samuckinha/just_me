@@ -10,11 +10,11 @@ body {
 /* 1. Cabeçalho e Imagem de Perfil */
 .profile-header {
     width: 100%;
-    min-height: 250px; 
-    overflow: hidden;
+    /* 💥 ALTERAÇÃO AQUI: Diminuído de 250px para 180px */
+    min-height: 180px; 
+    overflow: hidden; 
     background-color: #ccc;
-    position: relative; /* Para potencial sobreposição de elementos */
-}
+    position: relative; 
 
 .profile-image {
     width: 100%;
