@@ -2,85 +2,22 @@ document.addEventListener('DOMContentLoaded', function() {
     const navLinks = document.querySelectorAll('.nav-link');
     const contentArea = document.querySelector('.content-area');
 
-    /**
-     * Função auxiliar para gerar o HTML da galeria de imagens
-     * @param {string} prefix - Prefixo do nome do arquivo (ex: 'tr' para teatro)
-     * @param {number} count - Número total de imagens (ex: 5 para tr1.jpg a tr5.jpg)
-     * @returns {string} HTML da galeria de fotos
-     */
-    function generateGalleryHTML(prefix, count) {
-        let imagesHTML = '';
-        for (let i = 1; i <= count; i++) {
-            imagesHTML += `<img src="${prefix}${i}.jpg" alt="Foto ${i} da Seção">`;
-        }
-        return `
-            <section class="gallery-section">
-                <div class="photo-gallery">
-                    ${imagesHTML}
-                </div>
-            </section>
-        `;
-    }
+    // O conteúdo HOME continua sendo gerado diretamente no JS
+    const homeContent = {
+        title: '👋 Bem-vindo ao Meu Perfil!',
+        html: `
+            <p>Olá! Meu nome é Samuel. Sou ator, compositor, cantor e amo muito o que eu faço. Sou católico devoto de Nssª Sraª de Guadalupe, e este é o meu espaço pessoal online. Aqui você pode encontrar um pouco mais sobre minha vida, minha paixão pelo teatro e as pessoas que me inspiram.</p>
+            
+            <p>Use os botões abaixo para explorar as seções do meu perfil:</p>
 
-    // Conteúdo dinâmico para cada aba, incluindo as galerias solicitadas
-    const pageContent = {
-        'HOME': {
-            title: '👋 Bem-vindo ao Meu Perfil!',
-            html: `
-                <p>Olá! Meu nome é Samuel. Sou ator, compositor, cantor e amo muito o que eu faço. Sou católico devoto de Nssª Sraª de Guadalupe, e este é o meu espaço pessoal online. Aqui você pode encontrar um pouco mais sobre minha vida, minha paixão pelo teatro e as pessoas que me inspiram.</p>
-                
-                <p>Use os botões abaixo para explorar as seções do meu perfil:</p>
+            <div class="home-buttons">
+                <a href="#" class="nav-link" data-page="TEATRO">🎭 Ir para TEATRO</a>
+                <a href="#" class="nav-link" data-page="AMIGOS">🫂 Ir para AMIGOS</a>
+                <a href="#" class="nav-link" data-page="SOBRE MIM">✨ Ir para SOBRE MIM</a>
+            </div>
 
-                <div class="home-buttons">
-                    <a href="#" class="nav-link" data-page="TEATRO">🎭 Ir para TEATRO</a>
-                    <a href="#" class="nav-link" data-page="AMIGOS">🫂 Ir para AMIGOS</a>
-                    <a href="#" class="nav-link" data-page="SOBRE MIM">✨ Ir para SOBRE MIM</a>
-                </div>
-
-                <p style="margin-top: 30px; text-align: center; color: #666;">**Dica:** Você também pode usar a navegação fixa no topo.</p>
-            `
-        },
-        'TEATRO': {
-            title: '🎭 Minha Jornada no Teatro',
-            html: `
-                <p>Desde a minha infância, o teatro é a minha grande paixão. Aqui vou compartilhar os espetáculos que participei, os papéis que interpretei e as futuras apresentações.</p>
-                <ul>
-                    <li><strong>Última Peça:</strong> O Mágico de Oz (Elenco Principal)</li>
-                    <li><strong>Papel Sonhado:</strong> Fyero Tigelaar em "Wicked"</li>
-                    <li><strong>Próximo Projeto:</strong> Musical Original "O Sol Nasce no Sul" - Ensaio em breve!</li>
-                </ul>
-                ${generateGalleryHTML('tr', 5)} <p style="margin-top: 20px; text-align: center;">Para saber mais sobre meus projetos e performances, <a href="#" onclick="alert('Funcionalidade em desenvolvimento!')">clique aqui</a>.</p>
-            `
-        },
-        'AMIGOS': {
-            title: '🤝 A Galeria dos Melhores Amigos',
-            html: `
-                <p>Amores da minha vida, minha base! Cada um deles me inspira a ser melhor. Confira alguns dos nossos momentos mais divertidos e especiais.</p>
-                <ul>
-                    <li><strong>Passeio Favorito:</strong> Parque Barigui, Curitiba</li>
-                    <li><strong>Melhor Memória:</strong> Acampamento de Teatro em 2024</li>
-                    <li><strong>Momentos Inesquecíveis:</strong> Risadas e conversas infinitas.</li>
-                </ul>
-                ${generateGalleryHTML('amg', 16)} <p style="margin-top: 20px; text-align: center;">Quer ver mais fotos com a galera? Visite nosso <a href="#" onclick="alert('Álbum de amigos em breve!')">álbum especial</a>.</p>
-            `
-        },
-        'SOBRE MIM': {
-            title: '✨ Conheça um Pouco Mais',
-            html: `
-                <p>Olá novamente! Meu nome é Samuel. Sou um apaixonado pela arte e espiritualidade. Busco sempre equilibrar minha vida profissional no teatro com meus valores pessoais. A arte e a fé são os pilares que me sustentam em todos os meus projetos e sonhos, como a esperança de um dia atuar na Broadway.</p>
-                <ul>
-                    <li><strong>Cidade Natal:</strong> Araucária/PR</li>
-                    <li><strong>Sonho:</strong> Estrelar um Musical na Broadway</li>
-                    <li><strong>Interesses:</strong> Música, leitura, viagens e culinária.</li>
-                    <li><strong>Contato:</strong> <a href="mailto:schamnesamuel@gmail.com">schamnesamuel@gmail.com</a></li>
-                </ul>
-                ${generateGalleryHTML('me', 3)} <p style="margin-top: 20px; text-align: center;">Siga-me nas redes sociais para mais atualizações!</p>
-                <div class="social-links" style="text-align: center; margin-top: 15px;">
-                    <a href="#" onclick="alert('Instagram em breve!')">Instagram</a> | 
-                    <a href="#" onclick="alert('Facebook em breve!')">Facebook</a>
-                </div>
-            `
-        }
+            <p style="margin-top: 30px; text-align: center; color: #666;">**Dica:** Você também pode usar a navegação fixa no topo.</p>
+        `
     };
 
     /**
@@ -88,7 +25,6 @@ document.addEventListener('DOMContentLoaded', function() {
      * @param {string} pageKey - A chave da página (ex: 'TEATRO')
      */
     function loadContent(pageKey) {
-        const content = pageContent[pageKey];
         
         // 1. Inicia o Fade Out
         contentArea.style.opacity = 0;
@@ -96,13 +32,26 @@ document.addEventListener('DOMContentLoaded', function() {
 
         // Espera a animação de opacidade terminar (0.4s definido no CSS)
         setTimeout(() => {
-            // 2. Monta o novo conteúdo com a classe de animação
-            const newContentHTML = `
-                <section class="info-section">
-                    <h2>${content.title}</h2>
-                    ${content.html}
-                </section>
-            `;
+            let newContentHTML;
+
+            if (pageKey === 'HOME') {
+                // Conteúdo HOME (montado no JS)
+                newContentHTML = `
+                    <section class="info-section">
+                        <h2>${homeContent.title}</h2>
+                        ${homeContent.html}
+                    </section>
+                `;
+            } else {
+                // 💥 NOVO: Pega o conteúdo completo do <template> HTML
+                const template = document.getElementById(`template-${pageKey}`);
+                if (template) {
+                    // Clona o conteúdo do template
+                    newContentHTML = template.innerHTML;
+                } else {
+                    newContentHTML = `<p>Conteúdo da página ${pageKey} não encontrado.</p>`;
+                }
+            }
             
             // 3. Substitui o conteúdo
             contentArea.innerHTML = newContentHTML;
@@ -115,7 +64,6 @@ document.addEventListener('DOMContentLoaded', function() {
             navLinks.forEach(link => {
                 link.classList.remove('active');
             });
-            // O seletor usa data-page para encontrar o link correto
             const activeLink = document.querySelector(`.main-nav .nav-link[data-page="${pageKey}"]`);
             if (activeLink) {
                 activeLink.classList.add('active');
@@ -123,15 +71,13 @@ document.addEventListener('DOMContentLoaded', function() {
         }, 400); 
     }
 
-    // 💥 CORREÇÃO DE ERRO: Adiciona o ouvinte de evento (click) ao DOCUMENTO
-    // Isso garante que os botões na HOME (que são injetados dinamicamente) também funcionem.
+    // Adiciona o ouvinte de evento (click) ao DOCUMENTO
     document.addEventListener('click', function(event) {
         const target = event.target.closest('.nav-link');
         if (target) {
             event.preventDefault(); 
             const pageName = target.dataset.page; 
             
-            // Impede cliques repetidos na nav principal
             const currentActiveLink = document.querySelector('.main-nav .nav-link.active');
             const clickedFromMainNav = target.closest('.main-nav');
             
@@ -140,7 +86,6 @@ document.addEventListener('DOMContentLoaded', function() {
             }
             
             loadContent(pageName);
-            // Rola para o topo da área de conteúdo para a melhor UX
             contentArea.scrollIntoView({ behavior: 'smooth', block: 'start' });
         }
     });
