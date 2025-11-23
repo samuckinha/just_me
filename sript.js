@@ -22,7 +22,7 @@ document.addEventListener('DOMContentLoaded', function() {
         `;
     }
 
-    // Conteúdo dinâmico para cada aba, incluindo as novas galerias
+    // Conteúdo dinâmico para cada aba, incluindo as galerias solicitadas
     const pageContent = {
         'HOME': {
             title: '👋 Bem-vindo ao Meu Perfil!',
@@ -120,21 +120,22 @@ document.addEventListener('DOMContentLoaded', function() {
             if (activeLink) {
                 activeLink.classList.add('active');
             }
-        }, 400); // 400ms = Duração da transição CSS
+        }, 400); 
     }
 
-    // Adiciona o ouvinte de evento (click) a CADA link de navegação
+    // 💥 CORREÇÃO DE ERRO: Adiciona o ouvinte de evento (click) ao DOCUMENTO
+    // Isso garante que os botões na HOME (que são injetados dinamicamente) também funcionem.
     document.addEventListener('click', function(event) {
-        // Verifica se o elemento clicado ou um de seus pais é um link de navegação
         const target = event.target.closest('.nav-link');
         if (target) {
-            event.preventDefault(); // Impede o link de recarregar a página
-            const pageName = target.dataset.page; // Obtém o nome da aba do atributo data-page
+            event.preventDefault(); 
+            const pageName = target.dataset.page; 
             
-            // Evita recarregar se já estiver na página, exceto para HOME onde o clique pode vir dos botões internos
+            // Impede cliques repetidos na nav principal
             const currentActiveLink = document.querySelector('.main-nav .nav-link.active');
-            if (currentActiveLink && currentActiveLink.dataset.page === pageName && pageName !== 'HOME' && target.closest('.main-nav')) {
-                // Não faz nada se já estiver ativo e o clique veio da nav principal
+            const clickedFromMainNav = target.closest('.main-nav');
+            
+            if (currentActiveLink && currentActiveLink.dataset.page === pageName && clickedFromMainNav) {
                 return;
             }
             
