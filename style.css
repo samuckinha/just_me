@@ -7,28 +7,25 @@ body {
     color: #333;
 }
 
-/* 1. Cabeçalho e Imagem de Perfil */
+//* 1. Cabeçalho e Imagem de Perfil */
 .profile-header {
     width: 100%;
-    /* 💥 AJUSTE: Altura aumentada para 250px */
-    min-height: 250px; 
-    overflow: hidden; 
-    background-color: #003366; 
-    position: relative; 
+    height: auto;              /* ⭐ ajusta de acordo com a altura real da imagem */
+    overflow: visible;         /* ⭐ deixa a imagem aparecer inteira */
+    background-color: #003366;
+    position: relative;
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
-/* 💥 CORREÇÃO: Estilo da Imagem do Banner */
 .profile-header .profile-banner-image {
-    position: absolute;
-    top: 0;
-    left: 0;
+    position: relative;        /* ⭐ não estica nem corta */
     width: 100%;
-    height: auto;
-    object-fit: contain; 
-    opacity: 0.8; 
+    height: auto;              /* ⭐ mantém proporção original */
+    object-fit: contain;       /* ⭐ garante 0 cortes */
+    display: block;
+    opacity: 1;                /* se quiser manter o efeito, você ajusta depois */
 }
 
 /* Overlay para Texto */
