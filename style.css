@@ -212,4 +212,24 @@ body {
         width: 80%;
         text-align: center;
     }
+    .text-box {
+    background: #ffffff;
+    padding: 25px;
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    margin-bottom: 25px;
+}
+
+.text-title {
+    font-size: 22px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+.text-content {
+    font-size: 16px;
+    color: #555;
+    line-height: 1.6;
+}
 }
