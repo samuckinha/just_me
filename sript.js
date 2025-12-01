@@ -83,5 +83,76 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
+    /* --- Funcionalidade do Modal de Imagem --- */
+
+function setupImageModal() {
+    // Pega o modal, a imagem e o botão de fechar
+    const modal = document.getElementById('image-modal');
+    const modalImg = document.getElementById('modal-image');
+    const closeBtn = document.getElementsByClassName('close-btn')[0];
+
+    // Adiciona o listener para as imagens
+    const galleryImages = document.querySelectorAll('.grid-inicial img, .photo-gallery img');
+
+    galleryImages.forEach(img => {
+        img.addEventListener('click', function() {
+            // Abre o modal
+            modal.style.display = 'block';
+            
+            // Define o source e o alt da imagem
+            modalImg.src = this.src;
+            
+            // Opcional: define a legenda (caption) baseada no alt da imagem
+            const captionText = document.getElementById('caption');
+            captionText.innerHTML = this.alt;
+        });
+    });
+
+    // Quando o usuário clica no "x", fecha o modal
+    closeBtn.onclick = function() {
+        modal.style.display = 'none';
+    }
+
+    // Quando o usuário clica em qualquer lugar fora da imagem, fecha o modal
+    window.onclick = function(event) {
+        if (event.target == modal) {
+            modal.style.display = 'none';
+        }
+    }
+}
+
+// ⚠️ ATENÇÃO: Você precisa chamar essa função DEPOIS que o DOM estiver carregado
+// e sempre que carregar um novo conteúdo dinamicamente!
+
+// Para a galeria inicial (que está fixa no index.html):
+document.addEventListener('DOMContentLoaded', function() {
+    // ... Seu código de navegação (loadContent, etc) ...
+
+    // NOVO: Chama a função de configuração do modal
+    setupImageModal(); 
+});
+
+
+// Se você estiver usando o loadContent para carregar galerias DEPOIS
+// que a página é carregada (como no seu JS de exemplo), você precisa
+// chamar o setupImageModal DENTRO da função loadContent, depois de
+// contentArea.innerHTML = newContentHTML; para garantir que os listeners
+// sejam adicionados às novas imagens carregadas.
+// Exemplo (adapte o seu script.js):
+/*
+        // Dentro do setTimeout da função loadContent(pageKey)
+        setTimeout(() => {
+            // ... (restante do código)
+            
+            contentArea.innerHTML = newContentHTML;
+
+            // ... (restante do código)
+
+            // NOVO: Chama a função após o novo conteúdo ser carregado
+            setupImageModal(); 
+
+        }, 400); 
+*/
+
     loadContent('HOME'); 
 });
