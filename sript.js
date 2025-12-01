@@ -20,8 +20,6 @@ document.addEventListener('DOMContentLoaded', function() {
         `
     };
 
-    /**
-     * Função que renderiza o conteúdo da aba clicada com animação
      * @param {string} pageKey - A chave da página (ex: 'TEATRO')
      */
     function loadContent(pageKey) {
@@ -30,7 +28,6 @@ document.addEventListener('DOMContentLoaded', function() {
         contentArea.style.opacity = 0;
         contentArea.style.transform = 'translateY(10px)'; 
 
-        // Espera a animação de opacidade terminar (0.4s definido no CSS)
         setTimeout(() => {
             let newContentHTML;
 
@@ -53,14 +50,11 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
             }
             
-            // 3. Substitui o conteúdo
             contentArea.innerHTML = newContentHTML;
 
-            // 4. Aplica o Fade In
             contentArea.style.opacity = 1;
             contentArea.style.transform = 'translateY(0)';
 
-            // 5. Destaca o link ativo na navegação principal
             navLinks.forEach(link => {
                 link.classList.remove('active');
             });
@@ -71,7 +65,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }, 400); 
     }
 
-    // Adiciona o ouvinte de evento (click) ao DOCUMENTO
     document.addEventListener('click', function(event) {
         const target = event.target.closest('.nav-link');
         if (target) {
@@ -90,6 +83,5 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    // Carrega o conteúdo inicial da HOME quando a página é carregada
     loadContent('HOME'); 
 });
