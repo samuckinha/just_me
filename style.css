@@ -270,12 +270,12 @@ body {
 }
 
 @-webkit-keyframes zoom {
-  from {-webkit-transform:scale(0)} 
+  from {-webkit-transform:scale(0.8)} /* Começa um pouco menor */
   to {-webkit-transform:scale(1)}
 }
 
 @keyframes zoom {
-  from {transform:scale(0)} 
+  from {transform:scale(0.8)} /* Começa um pouco menor */
   to {transform:scale(1)}
 }
 }

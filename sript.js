@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', function() {
-    const navLinks = document.querySelectorAll('.nav-link');
+    const navLinks = document.querySelectorAll('.main-nav li a'); // Seletor ajustado para pegar os links da navegação principal
     const contentArea = document.querySelector('.content-area');
 
     // O conteúdo HOME continua sendo gerado diretamente no JS
@@ -20,6 +20,8 @@ document.addEventListener('DOMContentLoaded', function() {
         `
     };
 
+    /**
+     * Carrega o conteúdo da página especificada.
      * @param {string} pageKey - A chave da página (ex: 'TEATRO')
      */
     function loadContent(pageKey) {
@@ -39,14 +41,20 @@ document.addEventListener('DOMContentLoaded', function() {
                         ${homeContent.html}
                     </section>
                 `;
+                // Adiciona o HTML da galeria de destaque da página inicial, se você ainda quiser usá-la.
+                // Isso requer que você mova a seção '.galeria-inicial' do seu HTML fixo para ser gerada aqui
+                // ou que você mude sua estrutura de carregamento. Se a galeria não for dinâmica,
+                // apenas certifique-se de que o contentArea NÃO a sobreponha.
+                // Como você não forneceu a estrutura de <template> HTML, assumimos que o loadContent
+                // deve carregar SOMENTE o conteúdo principal.
+                
             } else {
-                // 💥 NOVO: Pega o conteúdo completo do <template> HTML
+                // Pega o conteúdo completo do <template> HTML
                 const template = document.getElementById(`template-${pageKey}`);
                 if (template) {
-                    // Clona o conteúdo do template
                     newContentHTML = template.innerHTML;
                 } else {
-                    newContentHTML = `<p>Conteúdo da página ${pageKey} não encontrado.</p>`;
+                    newContentHTML = `<p>Conteúdo da página ${pageKey} não encontrado. Certifique-se de que o elemento <template id="template-${pageKey}"> está presente.</p>`;
                 }
             }
             
@@ -55,104 +63,112 @@ document.addEventListener('DOMContentLoaded', function() {
             contentArea.style.opacity = 1;
             contentArea.style.transform = 'translateY(0)';
 
-            navLinks.forEach(link => {
+            // 3. Atualiza o link ativo na navegação principal (ajustado para o novo seletor)
+            document.querySelectorAll('.main-nav li a').forEach(link => {
                 link.classList.remove('active');
             });
-            const activeLink = document.querySelector(`.main-nav .nav-link[data-page="${pageKey}"]`);
+            // Adiciona a classe 'active' ao link correto
+            const activeLink = document.querySelector(`.main-nav li a[href*="${pageKey.toLowerCase()}.html"]`);
             if (activeLink) {
-                activeLink.classList.add('active');
+                 activeLink.classList.add('active');
             }
+            
+            // 💥 PONTO CRUCIAL: Chama a função do modal APÓS o novo conteúdo ser inserido
+            setupImageModal();
+
         }, 400); 
     }
-
+    
+    // --- Escuta de Cliques de Navegação ---
     document.addEventListener('click', function(event) {
-        const target = event.target.closest('.nav-link');
+        const target = event.target.closest('.nav-link, .main-nav a'); // Pega links internos e os da nav principal
+
         if (target) {
             event.preventDefault(); 
-            const pageName = target.dataset.page; 
+            let pageName = target.dataset.page; 
             
-            const currentActiveLink = document.querySelector('.main-nav .nav-link.active');
-            const clickedFromMainNav = target.closest('.main-nav');
-            
-            if (currentActiveLink && currentActiveLink.dataset.page === pageName && clickedFromMainNav) {
-                return;
+            // Se o clique veio da navegação principal, extrai o nome da página do atributo href
+            if (!pageName && target.closest('.main-nav')) {
+                const href = target.getAttribute('href');
+                pageName = href.replace('.html', '').toUpperCase();
+                // O HOME precisa de tratamento especial se o href for index.html
+                if (pageName === 'INDEX') pageName = 'HOME';
             }
             
-            loadContent(pageName);
-            contentArea.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            if (pageName) {
+                const currentActiveLink = document.querySelector('.main-nav a.active');
+                
+                // Evita recarregar se já estiver na página clicada na navegação
+                if (currentActiveLink && currentActiveLink.getAttribute('href').toUpperCase().includes(pageName)) {
+                    return;
+                }
+                
+                loadContent(pageName);
+                contentArea.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
         }
     });
 
-    /* --- Funcionalidade do Modal de Imagem --- */
+    // --- Execução Inicial ---
+    loadContent('HOME');
+    // Chama o setupImageModal para a galeria que já está no HTML (grid-inicial)
+    // Se o HOME está sendo carregado dinamicamente, isso será chamado dentro de loadContent.
+    // Se a galeria inicial for fixa no index.html, chame aqui.
+    // Como estamos usando o loadContent('HOME') no final, vamos confiar na chamada DENTRO dele.
+});
+
+
+/* ---------------------------------------------------------------------- */
+/* --- Função do Modal de Imagem (DEVE FICAR FORA DO DOMContentLoaded) --- */
+/* ---------------------------------------------------------------------- */
 
 function setupImageModal() {
     // Pega o modal, a imagem e o botão de fechar
     const modal = document.getElementById('image-modal');
+    // Adicionamos a classe 'active-modal' ao modal para acionar a animação no CSS.
+    if (!modal) return; // Sai se o modal não existe na página
+
     const modalImg = document.getElementById('modal-image');
     const closeBtn = document.getElementsByClassName('close-btn')[0];
 
-    // Adiciona o listener para as imagens
+    // Adiciona o listener para as imagens (tanto da galeria inicial quanto da galeria de fotos)
     const galleryImages = document.querySelectorAll('.grid-inicial img, .photo-gallery img');
 
     galleryImages.forEach(img => {
-        img.addEventListener('click', function() {
-            // Abre o modal
-            modal.style.display = 'block';
-            
-            // Define o source e o alt da imagem
-            modalImg.src = this.src;
-            
-            // Opcional: define a legenda (caption) baseada no alt da imagem
-            const captionText = document.getElementById('caption');
-            captionText.innerHTML = this.alt;
-        });
+        // Remove listeners antigos para evitar duplicação (importante para conteúdo dinâmico)
+        img.removeEventListener('click', openModalHandler); 
+        img.addEventListener('click', openModalHandler);
     });
+    
+    function openModalHandler() {
+        // Abre o modal
+        modal.style.display = 'block';
+        modal.classList.add('active-modal'); // Adiciona classe para potencial animação de abertura
+        
+        // Define o source e o alt da imagem
+        modalImg.src = this.src;
+        
+        // Opcional: define a legenda (caption) baseada no alt da imagem
+        const captionText = document.getElementById('caption');
+        captionText.innerHTML = this.alt;
+    }
+
+
+    // Função para fechar o modal
+    function closeModal() {
+        modal.classList.remove('active-modal');
+        modal.style.display = 'none';
+    }
 
     // Quando o usuário clica no "x", fecha o modal
-    closeBtn.onclick = function() {
-        modal.style.display = 'none';
+    if (closeBtn) {
+        closeBtn.onclick = closeModal;
     }
 
     // Quando o usuário clica em qualquer lugar fora da imagem, fecha o modal
     window.onclick = function(event) {
         if (event.target == modal) {
-            modal.style.display = 'none';
+            closeModal();
         }
     }
 }
-
-// ⚠️ ATENÇÃO: Você precisa chamar essa função DEPOIS que o DOM estiver carregado
-// e sempre que carregar um novo conteúdo dinamicamente!
-
-// Para a galeria inicial (que está fixa no index.html):
-document.addEventListener('DOMContentLoaded', function() {
-    // ... Seu código de navegação (loadContent, etc) ...
-
-    // NOVO: Chama a função de configuração do modal
-    setupImageModal(); 
-});
-
-
-// Se você estiver usando o loadContent para carregar galerias DEPOIS
-// que a página é carregada (como no seu JS de exemplo), você precisa
-// chamar o setupImageModal DENTRO da função loadContent, depois de
-// contentArea.innerHTML = newContentHTML; para garantir que os listeners
-// sejam adicionados às novas imagens carregadas.
-// Exemplo (adapte o seu script.js):
-/*
-        // Dentro do setTimeout da função loadContent(pageKey)
-        setTimeout(() => {
-            // ... (restante do código)
-            
-            contentArea.innerHTML = newContentHTML;
-
-            // ... (restante do código)
-
-            // NOVO: Chama a função após o novo conteúdo ser carregado
-            setupImageModal(); 
-
-        }, 400); 
-*/
-
-    loadContent('HOME'); 
-});
